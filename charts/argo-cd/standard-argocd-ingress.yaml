@@ -7,13 +7,11 @@
       alb.ingress.kubernetes.io/conditions.argogrpc: |
         [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "Content-Type", "values":["application/grpc"]}}]
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
-      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:598792377165:certificate/3ae35aa3-101e-4a0e-99d6-626a057eb855
     name: argocd
     namespace: argocd
   spec:
-    ingressClassName: alb
     rules:
-    - host: devops-expert.online
+    - host: argocd.argoproj.io
       http:
         paths:
         - path: /
@@ -26,10 +24,10 @@
         - path: /
           backend:
             service:
-              name: myargo-argocd-server
+              name: argocd-server
               port:
                 number: 443
           pathType: Prefix
     tls:
     - hosts:
-      - devops-expert.online
+      - argocd.argoproj.io
